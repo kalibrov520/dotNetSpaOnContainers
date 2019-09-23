@@ -2,3 +2,7 @@ ApiGw-Base/bin/
 ApiGw-Base/obj/
 ApiGw-Base/wwwroot/
 ApiGw-Base/.vs/
+ApiGw-Base/.vscode/
+dotNetMicroservicesOnContainers/.vs/
+dotNetMicroservicesOnContainers/CatalogApi/obj/
+dotNetMicroservicesOnContainers/CatalogApi/bin/
