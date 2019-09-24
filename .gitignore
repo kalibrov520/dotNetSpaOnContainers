@@ -8,3 +8,5 @@ dotNetMicroservicesOnContainers/CatalogApi/obj/
 dotNetMicroservicesOnContainers/CatalogApi/bin/
 dotNetMicroservicesOnContainers/BasketApi/bin/
 dotNetMicroservicesOnContainers/BasketApi/obj/
+dotNetMicroservicesOnContainers/OrderingApi/obj/
+dotNetMicroservicesOnContainers/OrderingApi/bin/
