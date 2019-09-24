@@ -6,3 +6,5 @@ ApiGw-Base/.vscode/
 dotNetMicroservicesOnContainers/.vs/
 dotNetMicroservicesOnContainers/CatalogApi/obj/
 dotNetMicroservicesOnContainers/CatalogApi/bin/
+dotNetMicroservicesOnContainers/BasketApi/bin/
+dotNetMicroservicesOnContainers/BasketApi/obj/

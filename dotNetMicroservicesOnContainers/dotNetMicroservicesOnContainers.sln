@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalogApi", "CatalogApi\Ca
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{FF8B3335-6165-4275-B061-A83603B7E161}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasketApi", "BasketApi\BasketApi.csproj", "{76B1C429-C185-49F9-8AF7-5C5C69470301}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,12 +19,17 @@ Global
 		{77FF7218-F51F-4711-85CA-130F9BEA4649}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77FF7218-F51F-4711-85CA-130F9BEA4649}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77FF7218-F51F-4711-85CA-130F9BEA4649}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76B1C429-C185-49F9-8AF7-5C5C69470301}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76B1C429-C185-49F9-8AF7-5C5C69470301}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76B1C429-C185-49F9-8AF7-5C5C69470301}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76B1C429-C185-49F9-8AF7-5C5C69470301}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{77FF7218-F51F-4711-85CA-130F9BEA4649} = {FF8B3335-6165-4275-B061-A83603B7E161}
+		{76B1C429-C185-49F9-8AF7-5C5C69470301} = {FF8B3335-6165-4275-B061-A83603B7E161}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B067570F-C65B-41ED-B36E-FA8DC1787335}
