@@ -1,0 +1,6 @@
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\Ordering.Domain\bin\Debug\netcoreapp2.2\Ordering.Domain.deps.json
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\Ordering.Domain\bin\Debug\netcoreapp2.2\Ordering.Domain.dll
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\Ordering.Domain\obj\Debug\netcoreapp2.2\Ordering.Domain.csproj.CoreCompileInputs.cache
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\Ordering.Domain\obj\Debug\netcoreapp2.2\Ordering.Domain.AssemblyInfoInputs.cache
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\Ordering.Domain\obj\Debug\netcoreapp2.2\Ordering.Domain.AssemblyInfo.cs
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\Ordering.Domain\obj\Debug\netcoreapp2.2\Ordering.Domain.csprojAssemblyReference.cache
