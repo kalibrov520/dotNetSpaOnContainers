@@ -18,14 +18,15 @@ namespace CatalogApi.Controllers
     public class CatalogController : ControllerBase
     {
         private readonly CatalogContext _catalogContext;
-        private readonly CatalogSettings _settings;
+        private readonly ICatalogSettings _settings;
 
-        public CatalogController(CatalogContext context, CatalogSettings settings)
+        public CatalogController(CatalogContext context, ICatalogSettings settings)
         {
             _catalogContext = context ?? throw new ArgumentNullException(nameof(context));
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
-            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            //TODO: FIX onModelCreating!!!! add foreign key to brand entity
+           //context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
         // GET api/v1/[controller]/items
