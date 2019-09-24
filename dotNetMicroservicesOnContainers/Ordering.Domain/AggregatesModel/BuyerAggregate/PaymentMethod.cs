@@ -1,8 +1,9 @@
 ﻿using System;
+using Ordering.Domain.Common;
 
 namespace Ordering.Domain.AggregatesModel.BuyerAggregate
 {
-    public class PaymentMethod
+    public class PaymentMethod : Entity
     {
         private string _alias;
         private string _cardNumber;
@@ -18,7 +19,7 @@ namespace Ordering.Domain.AggregatesModel.BuyerAggregate
 
         public PaymentMethod(int cardTypeId, string alias, string cardNumber, string securityNumber, string cardHolderName, DateTime expiration)
         {
-            //TODO: Custom exception
+
             _cardNumber = !string.IsNullOrWhiteSpace(cardNumber) ? cardNumber : throw new Exception(nameof(cardNumber));
             _securityNumber = !string.IsNullOrWhiteSpace(securityNumber) ? securityNumber : throw new Exception(nameof(securityNumber));
             _cardHolderName = !string.IsNullOrWhiteSpace(cardHolderName) ? cardHolderName : throw new Exception(nameof(cardHolderName));

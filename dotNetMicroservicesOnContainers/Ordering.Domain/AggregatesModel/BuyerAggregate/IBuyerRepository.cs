@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
+using Ordering.Domain.Common;
 
 namespace Ordering.Domain.AggregatesModel.BuyerAggregate
 {
-    public interface IBuyerRepository
+    public interface IBuyerRepository : IRepository<Buyer>
     {
         Buyer Add(Buyer buyer);
         Buyer Update(Buyer buyer);

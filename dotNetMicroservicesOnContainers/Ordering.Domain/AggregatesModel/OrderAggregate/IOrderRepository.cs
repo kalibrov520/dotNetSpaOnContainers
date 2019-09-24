@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
+using Ordering.Domain.Common;
 
 namespace Ordering.Domain.AggregatesModel.OrderAggregate
 {
-    public interface IOrderRepository
+    public interface IOrderRepository : IRepository<Order>
     {
         Order Add(Order order);
 

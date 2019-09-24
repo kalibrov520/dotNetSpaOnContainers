@@ -1,34 +1,30 @@
 ﻿using System;
+using Ordering.Domain.Common;
 
 namespace Ordering.Domain.AggregatesModel.OrderAggregate
 {
     //TODO: custom exceptions
-    public class OrderItem
+    public class OrderItem : Entity
     {
-        // DDD Patterns comment
-        // Using private fields, allowed since EF Core 1.1, is a much better encapsulation
-        // aligned with DDD Aggregates and Domain Entities (Instead of properties and property collections)
-        private string _productName;
-        private string _pictureUrl;
-        private decimal _unitPrice;
+        private readonly string _productName;
+        private readonly string _pictureUrl;
+        private readonly decimal _unitPrice;
         private decimal _discount;
         private int _units;
 
-        public int ProductId { get; private set; }
+        public int ProductId { get; }
 
-        protected OrderItem() { }
-
-        public OrderItem(int productId, string productName, decimal unitPrice, decimal discount, string PictureUrl, int units = 1)
+        protected OrderItem()
         {
-            if (units <= 0)
-            {
-                throw new Exception("Invalid number of units");
-            }
+        }
 
-            if ((unitPrice * units) < discount)
-            {
-                throw new Exception("The total of order item is lower than applied discount");
-            }
+        public OrderItem(int productId, string productName, decimal unitPrice, decimal discount, string PictureUrl,
+            int units = 1)
+        {
+            if (units <= 0) throw new Exception("");
+
+            if (unitPrice * units < discount)
+                throw new Exception("");
 
             ProductId = productId;
 
@@ -39,7 +35,10 @@ namespace Ordering.Domain.AggregatesModel.OrderAggregate
             _pictureUrl = PictureUrl;
         }
 
-        public string GetPictureUri() => _pictureUrl;
+        public string GetPictureUri()
+        {
+            return _pictureUrl;
+        }
 
         public decimal GetCurrentDiscount()
         {
@@ -56,24 +55,21 @@ namespace Ordering.Domain.AggregatesModel.OrderAggregate
             return _unitPrice;
         }
 
-        public string GetOrderItemProductName() => _productName;
+        public string GetOrderItemProductName()
+        {
+            return _productName;
+        }
 
         public void SetNewDiscount(decimal discount)
         {
-            if (discount < 0)
-            {
-                throw new Exception("Discount is not valid");
-            }
+            if (discount < 0) throw new Exception("");
 
             _discount = discount;
         }
 
         public void AddUnits(int units)
         {
-            if (units < 0)
-            {
-                throw new Exception("Invalid units");
-            }
+            if (units < 0) throw new Exception("");
 
             _units += units;
         }
