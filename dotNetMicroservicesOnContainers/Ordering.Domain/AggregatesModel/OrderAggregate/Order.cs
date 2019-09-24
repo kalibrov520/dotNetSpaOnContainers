@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Ordering.Domain.Common;
+using Ordering.Domain.Events;
 
 namespace Ordering.Domain.AggregatesModel.OrderAggregate
 {

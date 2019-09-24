@@ -33,7 +33,7 @@ namespace Ordering.Domain.AggregatesModel.OrderAggregate
                 .SingleOrDefault(s => string.Equals(s.Name, name, StringComparison.CurrentCultureIgnoreCase));
 
             if (state == null)
-                throw new OrderingDomainException(
+                throw new Exception(
                     $"Possible values for OrderStatus: {string.Join(",", List().Select(s => s.Name))}");
 
             return state;
@@ -44,7 +44,7 @@ namespace Ordering.Domain.AggregatesModel.OrderAggregate
             var state = List().SingleOrDefault(s => s.Id == id);
 
             if (state == null)
-                throw new OrderingDomainException(
+                throw new Exception(
                     $"Possible values for OrderStatus: {string.Join(",", List().Select(s => s.Name))}");
 
             return state;
