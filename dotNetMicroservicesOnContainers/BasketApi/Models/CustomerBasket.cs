@@ -2,6 +2,6 @@
 {
     public class CustomerBasket
     {
-        
+        public string BuyerId { get; set; }
     }
 }
