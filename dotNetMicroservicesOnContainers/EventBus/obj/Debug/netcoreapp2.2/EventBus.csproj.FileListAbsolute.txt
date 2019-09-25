@@ -1,0 +1,6 @@
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\EventBus\bin\Debug\netcoreapp2.2\EventBus.deps.json
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\EventBus\bin\Debug\netcoreapp2.2\EventBus.dll
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\EventBus\obj\Debug\netcoreapp2.2\EventBus.csprojAssemblyReference.cache
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\EventBus\obj\Debug\netcoreapp2.2\EventBus.csproj.CoreCompileInputs.cache
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\EventBus\obj\Debug\netcoreapp2.2\EventBus.AssemblyInfoInputs.cache
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\EventBus\obj\Debug\netcoreapp2.2\EventBus.AssemblyInfo.cs
