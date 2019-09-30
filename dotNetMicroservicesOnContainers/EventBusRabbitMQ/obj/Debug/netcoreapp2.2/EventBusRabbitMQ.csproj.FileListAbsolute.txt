@@ -1,0 +1,5 @@
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\EventBusRabbitMQ\bin\Debug\netcoreapp2.2\EventBus.dll
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\EventBusRabbitMQ\obj\Debug\netcoreapp2.2\EventBusRabbitMQ.csprojAssemblyReference.cache
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\EventBusRabbitMQ\obj\Debug\netcoreapp2.2\EventBusRabbitMQ.csproj.CoreCompileInputs.cache
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\EventBusRabbitMQ\obj\Debug\netcoreapp2.2\EventBusRabbitMQ.AssemblyInfoInputs.cache
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\EventBusRabbitMQ\obj\Debug\netcoreapp2.2\EventBusRabbitMQ.AssemblyInfo.cs
