@@ -12,11 +12,11 @@ namespace CatalogApi.Infrastructure
         public DbSet<CatalogBrand> CatalogBrands { get; set; }
         public DbSet<CatalogType> CatalogTypes { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        /*protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new CatalogItemEntityConfiguration());
             builder.ApplyConfiguration(new CatalogBrandEntityConfiguration());
             builder.ApplyConfiguration(new CatalogTypeEntityConfiguration());
-        }
+        }*/
     }
 }
