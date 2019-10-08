@@ -1,0 +1,14 @@
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\Ordering.Infrastructure\obj\Debug\netcoreapp2.2\Ordering.Infrastructure.csprojAssemblyReference.cache
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\Ordering.Infrastructure\obj\Debug\netcoreapp2.2\Ordering.Infrastructure.csproj.CoreCompileInputs.cache
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\Ordering.Infrastructure\obj\Debug\netcoreapp2.2\Ordering.Infrastructure.AssemblyInfoInputs.cache
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\Ordering.Infrastructure\obj\Debug\netcoreapp2.2\Ordering.Infrastructure.AssemblyInfo.cs
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\Ordering.Infrastructure\bin\Debug\netcoreapp2.2\Ordering.Infrastructure.deps.json
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\Ordering.Infrastructure\bin\Debug\netcoreapp2.2\Ordering.Infrastructure.dll
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\Ordering.Infrastructure\bin\Debug\netcoreapp2.2\Ordering.Infrastructure.pdb
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\Ordering.Infrastructure\bin\Debug\netcoreapp2.2\Microsoft.EntityFrameworkCore.dll
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\Ordering.Infrastructure\bin\Debug\netcoreapp2.2\Ordering.Domain.dll
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\Ordering.Infrastructure\bin\Debug\netcoreapp2.2\Ordering.Domain.pdb
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\Ordering.Infrastructure\bin\Debug\netcoreapp2.2\Microsoft.EntityFrameworkCore.xml
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\Ordering.Infrastructure\obj\Debug\netcoreapp2.2\Ordering.Infrastructure.csproj.CopyComplete
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\Ordering.Infrastructure\obj\Debug\netcoreapp2.2\Ordering.Infrastructure.dll
+D:\Projects\dotNetSpaOnContainers\dotNetMicroservicesOnContainers\Ordering.Infrastructure\obj\Debug\netcoreapp2.2\Ordering.Infrastructure.pdb

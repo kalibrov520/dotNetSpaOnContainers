@@ -8,7 +8,7 @@ namespace Ordering.Infrastructure
 {
     static class MediatorExtension
     {
-        public static async Task DispatchDomainEventAsync(this IMediator mediator, OrderingContext context)
+        public static async Task DispatchDomainEventsAsync(this IMediator mediator, OrderingContext context)
         {
             var domainEntities = context.ChangeTracker.Entries<Entity>()
                 .Where(x => x.Entity.DomainEvents != null && x.Entity.DomainEvents.Any());

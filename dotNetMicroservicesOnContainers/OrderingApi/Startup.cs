@@ -26,13 +26,6 @@ namespace OrderingApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            /*services.Configure<CatalogSettings>(Configuration.GetSection(nameof(CatalogSettings)));
-            services.AddSingleton<ICatalogSettings>(sp => sp.GetRequiredService<IOptions<CatalogSettings>>().Value);
-
-            services.AddDbContext<CatalogContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-            });*/
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddCors();
         }
