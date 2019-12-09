@@ -1,0 +1,7 @@
+dotNetOnContainers/.idea
+dotNetOnContainers/Catalog.API/bin
+dotNetOnContainers/Catalog.API/obj
+dotNetOnContainers/Catalog.UnitTests/bin
+dotNetOnContainers/Catalog.UnitTests/obj
+dotNetOnContainers/Catalog.FunctionalTests/bin
+dotNetOnContainers/Catalog.FunctionalTests/obj
