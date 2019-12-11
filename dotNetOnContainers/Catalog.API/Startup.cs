@@ -34,7 +34,8 @@ namespace Catalog.API
                 .AddCustomMvc(Configuration)
                 .AddCustomDbContext(Configuration)
                 .AddCustomOptions(Configuration)
-                .AddSwagger(Configuration);
+                .AddSwagger(Configuration)
+                .AddCors();
 
             var container = new ContainerBuilder();
             container.Populate(services);
@@ -57,8 +58,7 @@ namespace Catalog.API
              {
                  c.SwaggerEndpoint($"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json", "Catalog.API V1");
              });
-
-            app.UseCors("CorsPolicy");
+            
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
@@ -81,6 +81,8 @@ namespace Catalog.API
                 endpoints.MapGrpcService<CatalogService>();*/
             });
             
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyHeader());
+            
         }
     }
 
@@ -90,14 +92,14 @@ namespace Catalog.API
         {
             services.AddControllers();
 
-            services.AddCors(options =>
+            /*services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder => builder
                     .AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
-            });
+            });*/
 
             return services;
         }
@@ -106,7 +108,7 @@ namespace Catalog.API
             IConfiguration configuration)
         {
             services.AddEntityFrameworkSqlServer()
-                .AddDbContext<CatalogContext>(options => options.UseSqlServer(configuration["ConnectionString"]));
+                .AddDbContext<CatalogContext>(options => options.UseSqlServer("Data Source=DESKTOP-CRA4CPT;Initial Catalog=microservices;Integrated Security=True"));
 
             return services;
         }

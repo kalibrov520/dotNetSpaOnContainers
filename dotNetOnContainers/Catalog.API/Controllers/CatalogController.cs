@@ -13,9 +13,8 @@ using Microsoft.Extensions.Options;
 
 namespace Catalog.API.Controllers
 {
-    [Microsoft.AspNetCore.Components.Route("api/v1/[controller]")]
-    [ApiController]
-    public class CatalogController : ControllerBase
+    [Route("api/[controller]")]
+    public class CatalogController : Controller
     {
         private readonly CatalogContext _catalogContext;
         private readonly CatalogSettings _settings;
@@ -30,7 +29,7 @@ namespace Catalog.API.Controllers
             context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
-        // GET api/v1/[controller]/items[?pageSize=3&pageIndex=10]
+        // GET api/[controller]/items[?pageSize=3&pageIndex=10]
         [HttpGet]
         [Route("items")]
         [ProducesResponseType(typeof(PaginatedItemsViewModel<CatalogItem>), (int)HttpStatusCode.OK)]

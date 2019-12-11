@@ -1,23 +1,95 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Catalog.API.Extensions;
+using Catalog.API.Infrastructure;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Catalog.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static readonly string Namespace = typeof(Program).Namespace;
+        public static readonly string AppName = Namespace.Substring(Namespace.LastIndexOf('.', Namespace.LastIndexOf('.') - 1) + 1);
+
+        public static int Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var configuration = GetConfiguration();
+
+            try
+            {
+                var host = CreateHostBuilder(configuration, args);
+                
+//                host.MigrateDbContext<CatalogContext>((context, services) =>
+//                {
+//                    var env = services.GetService<IWebHostEnvironment>();
+//                    var settings = services.GetService<IOptions<CatalogSettings>>();
+//                    var logger = services.GetService<ILogger<CatalogContextSeed>>();
+//
+//                    new CatalogContextSeed()
+//                        .SeedAsync(context, env, settings, logger)
+//                        .Wait();
+//                });
+                
+                host.Run();
+
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                return 1;
+            }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+        private static IWebHost CreateHostBuilder(IConfiguration configuration, string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseConfiguration(configuration)
+                .CaptureStartupErrors(false)
+                .ConfigureKestrel(options =>
+                {
+                    var ports = GetDefinedPorts(configuration);
+                    options.Listen(IPAddress.Any, ports.httpPort, listenOptions =>
+                    {
+                        listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
+                    });
+                    options.Listen(IPAddress.Any, ports.grpcPort, listenOptions =>
+                    {
+                        listenOptions.Protocols = HttpProtocols.Http2;
+                    });
+
+                })
+                .UseStartup<Startup>()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseWebRoot("Pics")
+                .Build();
+
+        private static (int httpPort, int grpcPort) GetDefinedPorts(IConfiguration config)
+        {
+            var grpcPort = config.GetValue("GRPC_PORT", 81);
+            var port = config.GetValue("PORT", 80);
+            return (port, grpcPort);
+        }
+
+        private static IConfiguration GetConfiguration()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables();
+
+            var config = builder.Build();
+
+            return builder.Build();
+        }
     }
 }
