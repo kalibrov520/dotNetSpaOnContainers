@@ -5,4 +5,10 @@ dotNetOnContainers/Catalog.UnitTests/bin
 dotNetOnContainers/Catalog.UnitTests/obj
 dotNetOnContainers/Catalog.FunctionalTests/bin
 dotNetOnContainers/Catalog.FunctionalTests/obj
+dotNetOnContainers/Basket.API/bin
+dotNetOnContainers/Basket.API/obj
+dotNetOnContainers/Basket.UnitTests/bin
+dotNetOnContainers/Basket.UnitTests/obj
+dotNetOnContainers/Basket.FunctionalTests/bin
+dotNetOnContainers/Basket.FunctionalTests/obj
 dotNetOnContainers/.vs
