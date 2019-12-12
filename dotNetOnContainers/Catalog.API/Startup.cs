@@ -34,8 +34,10 @@ namespace Catalog.API
                 .AddCustomMvc(Configuration)
                 .AddCustomDbContext(Configuration)
                 .AddCustomOptions(Configuration)
-                .AddSwagger(Configuration)
+                //.AddSwagger(Configuration)
                 .AddCors();
+
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "My API", Version = "v1"}); });
 
             var container = new ContainerBuilder();
             container.Populate(services);
@@ -52,13 +54,10 @@ namespace Catalog.API
                 loggerFactory.CreateLogger<Startup>().LogDebug("Using PATH BASE '{pathBase}'", pathBase);
                 app.UsePathBase(pathBase);
             }
-
-            app.UseSwagger()
-             .UseSwaggerUI(c =>
-             {
-                 c.SwaggerEndpoint($"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json", "Catalog.API V1");
-             });
             
+            app.UseSwagger();
+            app.UseSwaggerUI(s => { s.SwaggerEndpoint("/swagger/v1/swagger.json", "MySite"); });
+
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
@@ -82,7 +81,6 @@ namespace Catalog.API
             });
             
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyHeader());
-            
         }
     }
 
@@ -108,7 +106,7 @@ namespace Catalog.API
             IConfiguration configuration)
         {
             services.AddEntityFrameworkSqlServer()
-                .AddDbContext<CatalogContext>(options => options.UseSqlServer("Data Source=DESKTOP-CRA4CPT;Initial Catalog=microservices;Integrated Security=True"));
+                .AddDbContext<CatalogContext>(options => options.UseSqlServer("Data Source=IKALIBROV\\SQLEXPRESS;Initial Catalog=test;Integrated Security=True"));
 
             return services;
         }
