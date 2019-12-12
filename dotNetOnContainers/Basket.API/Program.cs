@@ -4,18 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Catalog.API.Extensions;
-using Catalog.API.Infrastructure;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
-namespace Catalog.API
+namespace Basket.API
 {
     public class Program
     {
@@ -28,8 +24,8 @@ namespace Catalog.API
 
             try
             {
-                var host = CreateHostBuilder(configuration, args);
-
+                var host = BuildWebHost(configuration, args);
+                
                 host.Run();
 
                 return 0;
@@ -40,7 +36,7 @@ namespace Catalog.API
             }
         }
 
-        private static IWebHost CreateHostBuilder(IConfiguration configuration, string[] args) =>
+        private static IWebHost BuildWebHost(IConfiguration configuration, string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseConfiguration(configuration)
                 .CaptureStartupErrors(false)
@@ -51,6 +47,7 @@ namespace Catalog.API
                     {
                         listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
                     });
+
                     options.Listen(IPAddress.Any, ports.grpcPort, listenOptions =>
                     {
                         listenOptions.Protocols = HttpProtocols.Http2;
@@ -59,12 +56,11 @@ namespace Catalog.API
                 })
                 .UseStartup<Startup>()
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseWebRoot("Pics")
                 .Build();
-
+        
         private static (int httpPort, int grpcPort) GetDefinedPorts(IConfiguration config)
         {
-            var grpcPort = config.GetValue("GRPC_PORT", 81);
+            var grpcPort = config.GetValue("GRPC_PORT", 5001);
             var port = config.GetValue("PORT", 80);
             return (port, grpcPort);
         }
