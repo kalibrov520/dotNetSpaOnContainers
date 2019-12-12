@@ -1,21 +1,19 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Catalog.API.Infrastructure;
+using Catalog.API.IntegrationEvents;
+using EventBus;
+using EventBus.Abstractions;
+using EventBusRabbitMQ;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RabbitMQ.Client;
 
 namespace Catalog.API
 {
@@ -34,6 +32,8 @@ namespace Catalog.API
                 .AddCustomMvc(Configuration)
                 .AddCustomDbContext(Configuration)
                 .AddCustomOptions(Configuration)
+                .AddIntegrationServices(Configuration)
+                .AddEventBus(Configuration)
                 .AddCors()
                 .AddSwagger(Configuration);
 
@@ -45,14 +45,6 @@ namespace Catalog.API
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            var pathBase = Configuration["PATH_BASE"];
-
-            if (!string.IsNullOrEmpty(pathBase))
-            {
-                loggerFactory.CreateLogger<Startup>().LogDebug("Using PATH BASE '{pathBase}'", pathBase);
-                app.UsePathBase(pathBase);
-            }
-            
             app.UseSwagger().UseSwaggerUI(s => { s.SwaggerEndpoint("/swagger/v1/swagger.json", "MySite"); });
 
             app.UseRouting();
@@ -116,5 +108,69 @@ namespace Catalog.API
 
             return services;
         }
+        
+         public static IServiceCollection AddIntegrationServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddTransient<ICatalogIntegrationEventService, CatalogIntegrationEventService>();
+
+            services.AddSingleton<IRabbitMqPersistentConnection>(sp =>
+            {
+                var factory = new ConnectionFactory()
+                {
+                    HostName = /*configuration["EventBusConnection"],*/"testHost",
+                    DispatchConsumersAsync = true
+                };
+
+//                if (!string.IsNullOrEmpty(configuration["EventBusUserName"]))
+//                {
+//                    factory.UserName = configuration["EventBusUserName"];
+//                }
+//
+//                if (!string.IsNullOrEmpty(configuration["EventBusPassword"]))
+//                {
+//                    factory.Password = configuration["EventBusPassword"];
+//                }
+
+                var retryCount = 5;
+//                if (!string.IsNullOrEmpty(configuration["EventBusRetryCount"]))
+//                {
+//                    retryCount = int.Parse(configuration["EventBusRetryCount"]);
+//                }
+
+                return new DefaultRabbitMqPersistentConnection(factory, retryCount);
+            });
+            
+            return services;
+        }
+         
+          public static IServiceCollection AddEventBus(this IServiceCollection services, IConfiguration configuration)
+          {
+              var subscriptionClientName = /*configuration["SubscriptionClientName"];*/"testClient";
+
+
+              services.AddSingleton<IEventBus, EventBusRabbitMq>(sp =>
+              {
+                  var rabbitMqPersistentConnection = sp.GetRequiredService<IRabbitMqPersistentConnection>();
+                  var iLifetimeScope = sp.GetRequiredService<ILifetimeScope>();
+                  var eventBusSubcriptionsManager = sp.GetRequiredService<IEventBusSubscriptionsManager>();
+
+                  var retryCount = 5;
+                  if (!string.IsNullOrEmpty(configuration["EventBusRetryCount"]))
+                  {
+                      retryCount = int.Parse(configuration["EventBusRetryCount"]);
+                  }
+
+                  return new EventBusRabbitMq(rabbitMqPersistentConnection, iLifetimeScope,
+                      eventBusSubcriptionsManager,
+                      subscriptionClientName, retryCount);
+              });
+
+              services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
+
+              /*services.AddTransient<OrderStatusChangedToAwaitingValidationIntegrationEventHandler>();
+              services.AddTransient<OrderStatusChangedToPaidIntegrationEventHandler>();*/
+
+              return services;
+          }
     }
 }
