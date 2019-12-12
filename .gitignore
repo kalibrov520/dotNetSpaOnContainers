@@ -12,3 +12,5 @@ dotNetOnContainers/Basket.UnitTests/obj
 dotNetOnContainers/Basket.FunctionalTests/bin
 dotNetOnContainers/Basket.FunctionalTests/obj
 dotNetOnContainers/.vs
+dotNetOnContainers/EventBus/bin
+dotNetOnContainers/EventBus/obj
