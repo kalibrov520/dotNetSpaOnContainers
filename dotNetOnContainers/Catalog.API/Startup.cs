@@ -34,10 +34,8 @@ namespace Catalog.API
                 .AddCustomMvc(Configuration)
                 .AddCustomDbContext(Configuration)
                 .AddCustomOptions(Configuration)
-                //.AddSwagger(Configuration)
-                .AddCors();
-
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "My API", Version = "v1"}); });
+                .AddCors()
+                .AddSwagger(Configuration);
 
             var container = new ContainerBuilder();
             container.Populate(services);
@@ -55,8 +53,7 @@ namespace Catalog.API
                 app.UsePathBase(pathBase);
             }
             
-            app.UseSwagger();
-            app.UseSwaggerUI(s => { s.SwaggerEndpoint("/swagger/v1/swagger.json", "MySite"); });
+            app.UseSwagger().UseSwaggerUI(s => { s.SwaggerEndpoint("/swagger/v1/swagger.json", "MySite"); });
 
             app.UseRouting();
             app.UseEndpoints(endpoints =>
@@ -90,15 +87,6 @@ namespace Catalog.API
         {
             services.AddControllers();
 
-            /*services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy", builder => builder
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
-            });*/
-
             return services;
         }
 
@@ -121,14 +109,9 @@ namespace Catalog.API
 
         public static IServiceCollection AddSwagger(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSwaggerGen(options =>
+            services.AddSwaggerGen(c =>
             {
-                options.SwaggerDoc("v.2", new OpenApiInfo
-                {
-                    Title = "Catalog Api",
-                    Version = "v.2",
-                    Description = "API"
-                });
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "My API", Version = "v1"});
             });
 
             return services;
