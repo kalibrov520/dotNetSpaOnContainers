@@ -24,3 +24,9 @@ dotNetOnContainers/Ordering.UnitTests/bin
 dotNetOnContainers/Ordering.UnitTests/obj
 dotNetOnContainers/Ordering.FunctionalTests/bin
 dotNetOnContainers/Ordering.FunctionalTests/obj
+dotNetOnContainers/Ordering.Domain/bin
+dotNetOnContainers/Ordering.Domain/obj
+dotNetOnContainers/Ordering.Domain/.idea
+dotNetOnContainers/Ordering.Infrastructure/bin
+dotNetOnContainers/Ordering.Infrastructure/obj
+dotNetOnContainers/Ordering.Infrastructure/.idea

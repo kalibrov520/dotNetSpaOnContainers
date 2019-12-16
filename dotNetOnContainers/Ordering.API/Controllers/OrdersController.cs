@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,14 +15,14 @@ namespace Ordering.API.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        //private readonly IMediator _mediator;
+        private readonly IMediator _mediator;
         private readonly IOrderQueries _orderQueries;
 
         public OrdersController(
-            /*IMediator mediator, */
+            IMediator mediator, 
             IOrderQueries orderQueries)
         {
-            //_mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _orderQueries = orderQueries ?? throw new ArgumentNullException(nameof(orderQueries));
         }
 
@@ -37,13 +38,6 @@ namespace Ordering.API.Controllers
             {
                 var requestCancelOrder = new IdentifiedCommand<CancelOrderCommand, bool>(command, guid);
 
-                _logger.LogInformation(
-                    "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
-                    requestCancelOrder.GetGenericTypeName(),
-                    nameof(requestCancelOrder.Command.OrderNumber),
-                    requestCancelOrder.Command.OrderNumber,
-                    requestCancelOrder);
-
                 commandResult = await _mediator.Send(requestCancelOrder);
             }
 
@@ -53,9 +47,9 @@ namespace Ordering.API.Controllers
             }
 
             return Ok();
-        }*/
+        }
 
-        /*[Route("ship")]
+        [Route("ship")]
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -66,13 +60,6 @@ namespace Ordering.API.Controllers
             if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
             {
                 var requestShipOrder = new IdentifiedCommand<ShipOrderCommand, bool>(command, guid);
-
-                _logger.LogInformation(
-                    "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
-                    requestShipOrder.GetGenericTypeName(),
-                    nameof(requestShipOrder.Command.OrderNumber),
-                    requestShipOrder.Command.OrderNumber,
-                    requestShipOrder);
 
                 commandResult = await _mediator.Send(requestShipOrder);
             }
@@ -124,18 +111,11 @@ namespace Ordering.API.Controllers
             return Ok(cardTypes);
         }
 
-        /*[Route("draft")]
-        [HttpPost]
-        public async Task<ActionResult<OrderDraftDTO>> CreateOrderDraftFromBasketDataAsync([FromBody] CreateOrderDraftCommand createOrderDraftCommand)
-        {
-            _logger.LogInformation(
-                "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
-                createOrderDraftCommand.GetGenericTypeName(),
-                nameof(createOrderDraftCommand.BuyerId),
-                createOrderDraftCommand.BuyerId,
-                createOrderDraftCommand);
-
-            return await _mediator.Send(createOrderDraftCommand);
-        }*/
+//        [Route("draft")]
+//        [HttpPost]
+//        public async Task<ActionResult<OrderDraftDTO>> CreateOrderDraftFromBasketDataAsync([FromBody] CreateOrderDraftCommand createOrderDraftCommand)
+//        {
+//            return await _mediator.Send(createOrderDraftCommand);
+//        }
     }
 }
