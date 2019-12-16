@@ -44,6 +44,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.Domain", "Ordering
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.Infrastructure", "Ordering.Infrastructure\Ordering.Infrastructure.csproj", "{4DC76837-41CD-48B6-8779-E385BBB5F2CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationEventLog", "IntegrationEventLog\IntegrationEventLog.csproj", "{205D228A-3952-428B-8BE1-64EA937B8C7D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,7 @@ Global
 		{349E1897-6DFD-4B5E-8551-E96057CF5F0C} = {7C4DE566-9E9B-4017-BC80-94C0F1981BD7}
 		{5689266C-4C88-4C2A-91BC-36EA7A0DC503} = {3A7BBDE2-E8E3-4647-88BC-66ED7F471BFD}
 		{4DC76837-41CD-48B6-8779-E385BBB5F2CF} = {3A7BBDE2-E8E3-4647-88BC-66ED7F471BFD}
+		{205D228A-3952-428B-8BE1-64EA937B8C7D} = {FF984A93-39B9-43D3-8CBE-CEFA25CEC0E7}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{63C6F9EA-5E94-4763-8B98-EE848C893D70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -125,5 +128,9 @@ Global
 		{4DC76837-41CD-48B6-8779-E385BBB5F2CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DC76837-41CD-48B6-8779-E385BBB5F2CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DC76837-41CD-48B6-8779-E385BBB5F2CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{205D228A-3952-428B-8BE1-64EA937B8C7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{205D228A-3952-428B-8BE1-64EA937B8C7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{205D228A-3952-428B-8BE1-64EA937B8C7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{205D228A-3952-428B-8BE1-64EA937B8C7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

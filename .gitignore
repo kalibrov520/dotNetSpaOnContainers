@@ -30,3 +30,5 @@ dotNetOnContainers/Ordering.Domain/.idea
 dotNetOnContainers/Ordering.Infrastructure/bin
 dotNetOnContainers/Ordering.Infrastructure/obj
 dotNetOnContainers/Ordering.Infrastructure/.idea
+dotNetOnContainers/IntegrationEventLog/bin
+dotNetOnContainers/IntegrationEventLog/obj
