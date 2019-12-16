@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Data.Common;
 using System.Threading.Tasks;
 using EventBus.Abstractions;
 using EventBus.Events;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+using IntegrationEventLog.Services;
 using Ordering.Infrastructure;
 
 namespace Ordering.API.Application.IntegrationEvents
@@ -12,12 +10,17 @@ namespace Ordering.API.Application.IntegrationEvents
     public class OrderingIntegrationEventService : IOrderingIntegrationEventService
     {
         private readonly IEventBus _eventBus;
+        private readonly IIntegrationEventLogService _eventLogService;
         private readonly OrderingContext _orderingContext;
 
-        public OrderingIntegrationEventService(IEventBus eventBus, OrderingContext orderingContext)
+        public OrderingIntegrationEventService(
+            IEventBus eventBus, 
+            IIntegrationEventLogService eventLogService, 
+            OrderingContext orderingContext)
         {
             _orderingContext = orderingContext ?? throw new ArgumentNullException(nameof(orderingContext));
             _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+            _eventLogService = eventLogService ?? throw new ArgumentNullException(nameof(eventLogService));
         }
 
         public async Task PublishEventsThroughEventBusAsync(Guid transactionId)
@@ -29,7 +32,9 @@ namespace Ordering.API.Application.IntegrationEvents
                 try
                 {
                     await _eventLogService.MarkEventAsInProgressAsync(logEvt.EventId);
+                    
                     _eventBus.Publish(logEvt.IntegrationEvent);
+                    
                     await _eventLogService.MarkEventAsPublishedAsync(logEvt.EventId);
                 }
                 catch (Exception ex)

@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Ordering.API.Application.Commands;
 using Ordering.API.Application.Queries;
 
 namespace Ordering.API.Controllers
 {
-    [Route("api/v1/[controller]")]
-    [Authorize]
+    [Route("api/[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase
     {
@@ -26,7 +24,7 @@ namespace Ordering.API.Controllers
             _orderQueries = orderQueries ?? throw new ArgumentNullException(nameof(orderQueries));
         }
 
-/*        [Route("cancel")]
+        [Route("cancel")]
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -70,7 +68,7 @@ namespace Ordering.API.Controllers
             }
 
             return Ok();
-        }*/
+        }
 
         [Route("{orderId:int}")]
         [HttpGet]
@@ -111,11 +109,11 @@ namespace Ordering.API.Controllers
             return Ok(cardTypes);
         }
 
-//        [Route("draft")]
-//        [HttpPost]
-//        public async Task<ActionResult<OrderDraftDTO>> CreateOrderDraftFromBasketDataAsync([FromBody] CreateOrderDraftCommand createOrderDraftCommand)
-//        {
-//            return await _mediator.Send(createOrderDraftCommand);
-//        }
+        [Route("draft")]
+        [HttpPost]
+        public async Task<ActionResult<OrderDraftDto>> CreateOrderDraftFromBasketDataAsync([FromBody] CreateOrderDraftCommand createOrderDraftCommand)
+        {
+            return await _mediator.Send(createOrderDraftCommand);
+        }
     }
 }
