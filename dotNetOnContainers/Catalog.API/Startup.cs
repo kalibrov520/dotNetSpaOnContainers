@@ -117,7 +117,9 @@ namespace Catalog.API
             {
                 var factory = new ConnectionFactory()
                 {
-                    HostName = /*configuration["EventBusConnection"],*/"testHost",
+                    HostName = /*configuration["EventBusConnection"],*/"localhost",
+                    UserName = "guest",
+                    Password = "guest",
                     DispatchConsumersAsync = true
                 };
 
@@ -132,6 +134,7 @@ namespace Catalog.API
 //                }
 
                 var retryCount = 5;
+                
 //                if (!string.IsNullOrEmpty(configuration["EventBusRetryCount"]))
 //                {
 //                    retryCount = int.Parse(configuration["EventBusRetryCount"]);
@@ -145,8 +148,7 @@ namespace Catalog.API
          
           public static IServiceCollection AddEventBus(this IServiceCollection services, IConfiguration configuration)
           {
-              var subscriptionClientName = /*configuration["SubscriptionClientName"];*/"testClient";
-
+              var subscriptionClientName = /*configuration["SubscriptionClientName"]*/"testQueue";
 
               services.AddSingleton<IEventBus, EventBusRabbitMq>(sp =>
               {

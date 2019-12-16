@@ -195,7 +195,7 @@ namespace EventBusRabbitMQ
 
         private IModel CreateConsumerChannel()
         {
-            /*if (!_persistentConnection.IsConnected)
+            if (!_persistentConnection.IsConnected)
             {
                 _persistentConnection.TryConnect();
             }
@@ -218,8 +218,8 @@ namespace EventBusRabbitMQ
                 StartBasicConsume();
             };
 
-            return channel;*/
-            return null;
+            return channel;
+            //return null;
         }
 
         private async Task ProcessEvent(string eventName, string message)
