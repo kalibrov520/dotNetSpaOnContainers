@@ -17,3 +17,10 @@ dotNetOnContainers/EventBus/obj
 dotNetOnContainers/EventBusRabbitMQ/bin
 dotNetOnContainers/EventBusRabbitMQ/obj
 dotNetOnContainers/Basket.API/.idea
+dotNetOnContainers/Ordering.API/.idea
+dotNetOnContainers/Ordering.API/bin
+dotNetOnContainers/Ordering.API/obj
+dotNetOnContainers/Ordering.UnitTests/bin
+dotNetOnContainers/Ordering.UnitTests/obj
+dotNetOnContainers/Ordering.FunctionalTests/bin
+dotNetOnContainers/Ordering.FunctionalTests/obj
