@@ -206,7 +206,7 @@ namespace Catalog.API.Controllers
         }
 
         //PUT api/v1/[controller]/items
-        [Route("items")]
+        /*[Route("items")]
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.Created)]
@@ -220,7 +220,7 @@ namespace Catalog.API.Controllers
             }
 
             var oldPrice = catalogItem.Price;
-            var raiseProductPriceChangedEvent = /*oldPrice != productToUpdate.Price;*/ true;
+            var raiseProductPriceChangedEvent = /*oldPrice != productToUpdate.Price;#1# true;
 
             // Update current product
             catalogItem = productToUpdate;
@@ -241,6 +241,37 @@ namespace Catalog.API.Controllers
             {
                 await _catalogContext.SaveChangesAsync();
             }
+
+            return CreatedAtAction(nameof(ItemByIdAsync), new { id = productToUpdate.Id }, null);
+        }*/
+        
+        [Route("items")]
+        [HttpPut]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.Created)]
+        public async Task<ActionResult> UpdateProductAsync()
+        {
+            var productToUpdate = new CatalogItem
+            {
+                Id = 1,
+                Name = "test",
+                Price = 15
+            };
+            
+            var catalogItem = new CatalogItem
+            {
+                Id = 1,
+                Name = "test",
+                Price = 10
+            };
+
+            var oldPrice = catalogItem.Price;
+
+            catalogItem = productToUpdate;
+
+            var priceChangedEvent = new ProductPriceChangedIntegrationEvent(catalogItem.Id, productToUpdate.Price, oldPrice);
+            
+            await _catalogIntegrationEventService.PublishThroughEventBusAsync(priceChangedEvent);
 
             return CreatedAtAction(nameof(ItemByIdAsync), new { id = productToUpdate.Id }, null);
         }
