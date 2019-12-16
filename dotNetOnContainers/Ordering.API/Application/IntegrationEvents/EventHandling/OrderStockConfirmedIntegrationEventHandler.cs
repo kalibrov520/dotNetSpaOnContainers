@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using EventBus.Abstractions;
 using MediatR;
-using Microsoft.Extensions.Logging;
+using Ordering.API.Application.Commands;
 using Ordering.API.Application.IntegrationEvents.Events;
 
 namespace Ordering.API.Application.IntegrationEvents.EventHandling
