@@ -8,9 +8,21 @@
       <PackageReference Include="Autofac" Version="4.9.4" />
       <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="5.0.1" />
       <PackageReference Include="Dapper" Version="2.0.30" />
+      <PackageReference Include="FluentValidation" Version="8.6.0" />
       <PackageReference Include="Grpc" Version="2.26.0-pre1" />
       <PackageReference Include="MediatR" Version="7.0.0" />
       <PackageReference Include="Microsoft.Data.SqlClient" Version="1.0.19269.1" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\EventBus\EventBus.csproj" />
+      <ProjectReference Include="..\Ordering.Domain\Ordering.Domain.csproj" />
+      <ProjectReference Include="..\Ordering.Infrastructure\Ordering.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Infrastructure" />
     </ItemGroup>
 
 </Project>
