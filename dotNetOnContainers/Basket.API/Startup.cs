@@ -5,7 +5,12 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Basket.API.Infrastructure.Repositories;
+using Basket.API.IntegrationEvents.EventHandling;
+using Basket.API.IntegrationEvents.Events;
 using Basket.API.Model;
+using EventBus;
+using EventBus.Abstractions;
+using EventBusRabbitMQ;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -16,6 +21,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using RabbitMQ.Client;
 using StackExchange.Redis;
 
 namespace Basket.API
@@ -46,8 +52,27 @@ namespace Basket.API
                 return ConnectionMultiplexer.Connect(configuration);
             });
 
-            services.AddTransient<IBasketRepository, RedisBasketRepository>();
+            services.AddSingleton<IRabbitMqPersistentConnection>(sp =>
+            {
+                var logger = sp.GetRequiredService<ILogger<DefaultRabbitMqPersistentConnection>>();
+
+                var factory = new ConnectionFactory()
+                {
+                    HostName = "localhost",
+                    UserName = "guest",
+                    Password = "guest",
+                    DispatchConsumersAsync = true
+                };
+
+                var retryCount = 5;
+
+                return new DefaultRabbitMqPersistentConnection(factory, retryCount);
+            });
             
+            RegisterEventBus(services);
+
+            services.AddTransient<IBasketRepository, RedisBasketRepository>();
+
             services.AddCors();
 
             services.AddSwaggerGen(c =>
@@ -64,14 +89,6 @@ namespace Basket.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            var pathBase = Configuration["PATH_BASE"];
-
-            if (!string.IsNullOrEmpty(pathBase))
-            {
-                loggerFactory.CreateLogger<Startup>().LogDebug("Using PATH BASE '{pathBase}'", pathBase);
-                app.UsePathBase(pathBase);
-            }
-            
             app.UseSwagger().UseSwaggerUI(s => { s.SwaggerEndpoint("/swagger/v1/swagger.json", "MySite"); });
 
             app.UseRouting();
@@ -82,6 +99,39 @@ namespace Basket.API
             });
             
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyHeader());
+            
+            ConfigureEventBus(app);
+        }
+        
+         private void RegisterEventBus(IServiceCollection services)
+         {
+             var subscriptionClientName = "testQueue";
+
+
+             services.AddSingleton<IEventBus, EventBusRabbitMq>(sp =>
+             {
+                 var rabbitMqPersistentConnection = sp.GetRequiredService<IRabbitMqPersistentConnection>();
+                 var iLifetimeScope = sp.GetRequiredService<ILifetimeScope>();
+                 var eventBusSubcriptionsManager = sp.GetRequiredService<IEventBusSubscriptionsManager>();
+
+                 var retryCount = 5;
+
+                 return new EventBusRabbitMq(rabbitMqPersistentConnection, iLifetimeScope,
+                     eventBusSubcriptionsManager, subscriptionClientName, retryCount);
+             });
+
+             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
+
+             services.AddTransient<ProductPriceChangedIntegrationEventHandler>();
+             //services.AddTransient<OrderStartedIntegrationEventHandler>();
+        }
+
+        private void ConfigureEventBus(IApplicationBuilder app)
+        {
+            var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+
+            eventBus.Subscribe<ProductPriceChangedIntegrationEvent, ProductPriceChangedIntegrationEventHandler>();
+            //eventBus.Subscribe<OrderStartedIntegrationEvent, OrderStartedIntegrationEventHandler>();
         }
     }
 }

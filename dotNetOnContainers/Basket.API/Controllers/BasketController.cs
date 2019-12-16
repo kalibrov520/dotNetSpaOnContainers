@@ -3,6 +3,7 @@ using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Basket.API.Model;
+using EventBus.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,29 +14,26 @@ namespace Basket.API.Controllers
     public class BasketController : Controller
     {
         private readonly IBasketRepository _repository;
-        /*private readonly IIdentityService _identityService;
-        private readonly IEventBus _eventBus;*/
+        private readonly IEventBus _eventBus;
         private readonly ILogger<BasketController> _logger;
 
         public BasketController(
             ILogger<BasketController> logger,
-            IBasketRepository repository/*,
-            IIdentityService identityService,
-            IEventBus eventBus*/)
+            IBasketRepository repository,
+            IEventBus eventBus)
         {
             _logger = logger;
             _repository = repository;
-            /*_identityService = identityService;
-            _eventBus = eventBus;*/
+            _eventBus = eventBus;
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(CustomerBasket), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<CustomerBasket>> GetBasketByIdAsync(string id)
         {
-            var basket = await _repository.GetBasketAsync(id);
+            //var basket = await _repository.GetBasketAsync(id);
 
-            return Ok(basket ?? new CustomerBasket(id));
+            return Ok(/*basket ?? new CustomerBasket(id)*/);
         }
 
         [HttpPost]

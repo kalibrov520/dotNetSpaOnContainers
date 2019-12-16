@@ -5,6 +5,8 @@ using System.Net;
 using System.Threading.Tasks;
 using Catalog.API.Extensions;
 using Catalog.API.Infrastructure;
+using Catalog.API.IntegrationEvents;
+using Catalog.API.IntegrationEvents.Events;
 using Catalog.API.Model;
 using Catalog.API.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -18,12 +20,12 @@ namespace Catalog.API.Controllers
     {
         private readonly CatalogContext _catalogContext;
         private readonly CatalogSettings _settings;
-        //private readonly ICatalogIntegrationEventService _catalogIntegrationEventService;
+        private readonly ICatalogIntegrationEventService _catalogIntegrationEventService;
 
-        public CatalogController(CatalogContext context, IOptionsSnapshot<CatalogSettings> settings/*, ICatalogIntegrationEventService catalogIntegrationEventService*/)
+        public CatalogController(CatalogContext context, IOptionsSnapshot<CatalogSettings> settings, ICatalogIntegrationEventService catalogIntegrationEventService)
         {
             _catalogContext = context ?? throw new ArgumentNullException(nameof(context));
-            //_catalogIntegrationEventService = catalogIntegrationEventService ?? throw new ArgumentNullException(nameof(catalogIntegrationEventService));
+            _catalogIntegrationEventService = catalogIntegrationEventService ?? throw new ArgumentNullException(nameof(catalogIntegrationEventService));
             _settings = settings.Value;
 
             context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
@@ -57,15 +59,6 @@ namespace Catalog.API.Controllers
                 .Skip(pageSize * pageIndex)
                 .Take(pageSize)
                 .ToListAsync();
-
-            /* The "awesome" fix for testing Devspaces */
-
-            /*
-            foreach (var pr in itemsOnPage) {
-                pr.Name = "Awesome " + pr.Name;
-            }
-
-            */
 
             itemsOnPage = ChangeUriPlaceholder(itemsOnPage);
 
@@ -213,7 +206,7 @@ namespace Catalog.API.Controllers
         }
 
         //PUT api/v1/[controller]/items
-        [Route("items")]
+        /*[Route("items")]
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.Created)]
@@ -227,13 +220,13 @@ namespace Catalog.API.Controllers
             }
 
             var oldPrice = catalogItem.Price;
-            var raiseProductPriceChangedEvent = oldPrice != productToUpdate.Price;
+            var raiseProductPriceChangedEvent = /*oldPrice != productToUpdate.Price;#1# true;
 
             // Update current product
             catalogItem = productToUpdate;
             _catalogContext.CatalogItems.Update(catalogItem);
 
-            /*if (raiseProductPriceChangedEvent) // Save product's data and publish integration event through the Event Bus if price has changed
+            if (raiseProductPriceChangedEvent) // Save product's data and publish integration event through the Event Bus if price has changed
             {
                 //Create Integration Event to be published through the Event Bus
                 var priceChangedEvent = new ProductPriceChangedIntegrationEvent(catalogItem.Id, productToUpdate.Price, oldPrice);
@@ -247,7 +240,38 @@ namespace Catalog.API.Controllers
             else // Just save the updated product because the Product's Price hasn't changed.
             {
                 await _catalogContext.SaveChangesAsync();
-            }*/
+            }
+
+            return CreatedAtAction(nameof(ItemByIdAsync), new { id = productToUpdate.Id }, null);
+        }*/
+        
+        [Route("items")]
+        [HttpPut]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.Created)]
+        public async Task<ActionResult> UpdateProductAsync()
+        {
+            var productToUpdate = new CatalogItem
+            {
+                Id = 1,
+                Name = "test",
+                Price = 15
+            };
+            
+            var catalogItem = new CatalogItem
+            {
+                Id = 1,
+                Name = "test",
+                Price = 10
+            };
+
+            var oldPrice = catalogItem.Price;
+
+            catalogItem = productToUpdate;
+
+            var priceChangedEvent = new ProductPriceChangedIntegrationEvent(catalogItem.Id, productToUpdate.Price, oldPrice);
+            
+            await _catalogIntegrationEventService.PublishThroughEventBusAsync(priceChangedEvent);
 
             return CreatedAtAction(nameof(ItemByIdAsync), new { id = productToUpdate.Id }, null);
         }
