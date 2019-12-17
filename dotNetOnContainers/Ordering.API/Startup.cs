@@ -12,6 +12,7 @@ using EventBus.Abstractions;
 using EventBusRabbitMQ;
 using IntegrationEventLog;
 using IntegrationEventLog.Services;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -115,10 +116,10 @@ namespace Ordering.API
         public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddEntityFrameworkSqlServer()
-                .AddDbContext<OrderingContext>(options => options.UseSqlServer("Data Source=IKALIBROV\\SQLEXPRESS;Initial Catalog=test;Integrated Security=True"));
+                .AddDbContext<OrderingContext>(options => options.UseSqlServer("Data Source=IKALIBROV;Initial Catalog=OrderDB;Integrated Security=True"));
 
             services.AddEntityFrameworkSqlServer()
-                .AddDbContext<IntegrationEventLogContext>(options => options.UseSqlServer("Data Source=IKALIBROV\\SQLEXPRESS;Initial Catalog=test;Integrated Security=True"));
+                .AddDbContext<IntegrationEventLogContext>(options => options.UseSqlServer("Data Source=IKALIBROV;Initial Catalog=OrderDB;Integrated Security=True"));
             
             return services;
         }

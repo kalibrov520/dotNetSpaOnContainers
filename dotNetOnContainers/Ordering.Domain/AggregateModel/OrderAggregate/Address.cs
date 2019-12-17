@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Ordering.Domain.SeedWork;
 
 namespace Ordering.Domain.AggregateModel.OrderAggregate
@@ -10,6 +11,7 @@ namespace Ordering.Domain.AggregateModel.OrderAggregate
         public string City { get; private set; }
         public string State { get; private set; }
         public string Country { get; private set; }
+        [Key]
         public string ZipCode { get; private set; }
 
         public Address() { }

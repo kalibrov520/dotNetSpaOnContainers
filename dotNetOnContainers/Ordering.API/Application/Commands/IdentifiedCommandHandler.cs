@@ -14,8 +14,7 @@ namespace Ordering.API.Application.Commands
 
         public IdentifiedCommandHandler(
             IMediator mediator,
-            IRequestManager requestManager,
-            ILogger<IdentifiedCommandHandler<T, R>> logger)
+            IRequestManager requestManager)
         {
             _mediator = mediator;
             _requestManager = requestManager;

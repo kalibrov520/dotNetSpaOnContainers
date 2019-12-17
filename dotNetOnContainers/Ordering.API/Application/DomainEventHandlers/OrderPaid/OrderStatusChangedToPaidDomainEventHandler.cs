@@ -45,7 +45,8 @@ namespace Ordering.API.Application.DomainEventHandlers.OrderPaid
                 buyer.Name,
                 orderStockList);
 
-            await _orderingIntegrationEventService.AddAndSaveEventAsync(orderStatusChangedToPaidIntegrationEvent);         
+            await _orderingIntegrationEventService.PublishEventsThroughEventBusAsync(orderStatusChangedToPaidIntegrationEvent);
+            //await _orderingIntegrationEventService.AddAndSaveEventAsync(orderStatusChangedToPaidIntegrationEvent);         
         }
     }  
 }

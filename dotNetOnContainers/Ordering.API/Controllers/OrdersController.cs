@@ -28,16 +28,11 @@ namespace Ordering.API.Controllers
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> CancelOrderAsync([FromBody]CancelOrderCommand command, [FromHeader(Name = "x-requestid")] string requestId)
+        public async Task<IActionResult> CancelOrderAsync([FromBody]CancelOrderCommand command)
         {
             bool commandResult = false;
 
-            if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
-            {
-                var requestCancelOrder = new IdentifiedCommand<CancelOrderCommand, bool>(command, guid);
-
-                commandResult = await _mediator.Send(requestCancelOrder);
-            }
+            commandResult = await _mediator.Send(command);
 
             if (!commandResult)
             {

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Ordering.Domain.AggregateModel.BuyerAggregate;
 using Ordering.Domain.AggregateModel.OrderAggregate;
 using Ordering.Domain.SeedWork;
+using Ordering.Infrastructure.EntityConfigurations;
 
 namespace Ordering.Infrastructure
 {
@@ -24,6 +25,17 @@ namespace Ordering.Infrastructure
         private IDbContextTransaction _currentTransaction;
 
         public OrderingContext(DbContextOptions<OrderingContext> options) : base(options) { }
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new ClientRequestEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new PaymentMethodEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderItemEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new CardTypeEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderStatusEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new BuyerEntityTypeConfiguration());
+        }
 
         public IDbContextTransaction GetCurrentTransaction() => _currentTransaction;
 

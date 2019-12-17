@@ -35,7 +35,8 @@ namespace Ordering.API.Application.DomainEventHandlers.OrderStockConfirmed
 
             var orderStatusChangedToStockConfirmedIntegrationEvent = new OrderStatusChangedToStockConfirmedIntegrationEvent(order.Id, order.OrderStatus.Name, buyer.Name);
             
-            await _orderingIntegrationEventService.AddAndSaveEventAsync(orderStatusChangedToStockConfirmedIntegrationEvent);            
+            await _orderingIntegrationEventService.PublishEventsThroughEventBusAsync(orderStatusChangedToStockConfirmedIntegrationEvent);         
+            //await _orderingIntegrationEventService.AddAndSaveEventAsync(orderStatusChangedToStockConfirmedIntegrationEvent);            
         }
     }  
 }

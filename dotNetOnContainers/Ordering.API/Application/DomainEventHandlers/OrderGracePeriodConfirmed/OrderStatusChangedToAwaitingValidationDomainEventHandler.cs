@@ -41,7 +41,9 @@ namespace Ordering.API.Application.DomainEventHandlers.OrderGracePeriodConfirmed
             var orderStatusChangedToAwaitingValidationIntegrationEvent = new OrderStatusChangedToAwaitingValidationIntegrationEvent(
                 order.Id, order.OrderStatus.Name, buyer.Name, orderStockList);
             
-            await _orderingIntegrationEventService.AddAndSaveEventAsync(orderStatusChangedToAwaitingValidationIntegrationEvent);
+            await _orderingIntegrationEventService.PublishEventsThroughEventBusAsync(orderStatusChangedToAwaitingValidationIntegrationEvent);
+
+            //await _orderingIntegrationEventService.AddAndSaveEventAsync(orderStatusChangedToAwaitingValidationIntegrationEvent);
         }
     }  
 }

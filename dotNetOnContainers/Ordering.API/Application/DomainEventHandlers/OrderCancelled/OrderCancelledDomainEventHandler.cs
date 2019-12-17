@@ -35,7 +35,8 @@ namespace Ordering.API.Application.DomainEventHandlers.OrderCancelled
 
             var orderStatusChangedToCancelledIntegrationEvent = new OrderStatusChangedToCancelledIntegrationEvent(order.Id, order.OrderStatus.Name, buyer.Name);
             
-            await _orderingIntegrationEventService.AddAndSaveEventAsync(orderStatusChangedToCancelledIntegrationEvent);
+            await _orderingIntegrationEventService.PublishEventsThroughEventBusAsync(orderStatusChangedToCancelledIntegrationEvent);
+            //await _orderingIntegrationEventService.AddAndSaveEventAsync(orderStatusChangedToCancelledIntegrationEvent);
         }
     }
 }

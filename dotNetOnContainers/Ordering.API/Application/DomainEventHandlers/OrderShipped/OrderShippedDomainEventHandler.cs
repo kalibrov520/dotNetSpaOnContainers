@@ -35,7 +35,9 @@ namespace Ordering.API.Application.DomainEventHandlers.OrderShipped
 
             var orderStatusChangedToShippedIntegrationEvent = new OrderStatusChangedToShippedIntegrationEvent(order.Id, order.OrderStatus.Name, buyer.Name);
             
-            await _orderingIntegrationEventService.AddAndSaveEventAsync(orderStatusChangedToShippedIntegrationEvent);
+            await _orderingIntegrationEventService.PublishEventsThroughEventBusAsync(orderStatusChangedToShippedIntegrationEvent);
+
+            //await _orderingIntegrationEventService.AddAndSaveEventAsync(orderStatusChangedToShippedIntegrationEvent);
         }
     }
 }

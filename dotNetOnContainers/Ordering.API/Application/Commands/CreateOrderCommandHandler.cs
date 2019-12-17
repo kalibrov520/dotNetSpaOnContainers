@@ -30,7 +30,8 @@ namespace Ordering.API.Application.Commands
         {
             // Add Integration event to clean the basket
             var orderStartedIntegrationEvent = new OrderStartedIntegrationEvent(message.UserId);
-            await _orderingIntegrationEventService.AddAndSaveEventAsync(orderStartedIntegrationEvent);
+            await _orderingIntegrationEventService.PublishEventsThroughEventBusAsync(orderStartedIntegrationEvent);
+            //await _orderingIntegrationEventService.AddAndSaveEventAsync(orderStartedIntegrationEvent);
 
             // Add/Update the Buyer AggregateRoot
             // DDD patterns comment: Add child entities and value-objects through the Order Aggregate-Root

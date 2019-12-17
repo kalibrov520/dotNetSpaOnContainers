@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -7,18 +7,11 @@ using Ordering.Domain.SeedWork;
 
 namespace Ordering.Infrastructure.Repositories
 {
-    public class OrderRepository
-        : IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
         private readonly OrderingContext _context;
 
-        public IUnitOfWork UnitOfWork
-        {
-            get
-            {
-                return _context;
-            }
-        }
+        public IUnitOfWork UnitOfWork => _context;
 
         public OrderRepository(OrderingContext context)
         {

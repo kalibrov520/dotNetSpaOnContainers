@@ -43,7 +43,8 @@ namespace Ordering.API.Application.DomainEventHandlers.OrderStarted
                 .SaveEntitiesAsync(cancellationToken);
 
             var orderStatusChangedToSubmittedIntegrationEvent = new OrderStatusChangedToSubmittedIntegrationEvent(orderStartedEvent.Order.Id, orderStartedEvent.Order.OrderStatus.Name, buyer.Name);
-            await _orderingIntegrationEventService.AddAndSaveEventAsync(orderStatusChangedToSubmittedIntegrationEvent);
+            await _orderingIntegrationEventService.PublishEventsThroughEventBusAsync(orderStatusChangedToSubmittedIntegrationEvent);
+            //await _orderingIntegrationEventService.AddAndSaveEventAsync(orderStatusChangedToSubmittedIntegrationEvent);
         }
     }
 }

@@ -10,20 +10,32 @@ namespace Ordering.API.Application.IntegrationEvents
     public class OrderingIntegrationEventService : IOrderingIntegrationEventService
     {
         private readonly IEventBus _eventBus;
-        private readonly IIntegrationEventLogService _eventLogService;
+        //private readonly IIntegrationEventLogService _eventLogService;
         private readonly OrderingContext _orderingContext;
 
         public OrderingIntegrationEventService(
             IEventBus eventBus, 
-            IIntegrationEventLogService eventLogService, 
+            //IIntegrationEventLogService eventLogService, 
             OrderingContext orderingContext)
         {
             _orderingContext = orderingContext ?? throw new ArgumentNullException(nameof(orderingContext));
             _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
-            _eventLogService = eventLogService ?? throw new ArgumentNullException(nameof(eventLogService));
+            //_eventLogService = eventLogService ?? throw new ArgumentNullException(nameof(eventLogService));
         }
-
-        public async Task PublishEventsThroughEventBusAsync(Guid transactionId)
+        
+        public async Task PublishEventsThroughEventBusAsync(IntegrationEvent @event)
+        {
+            try
+            {
+                _eventBus.Publish(@event);
+            }
+            catch (Exception ex)
+            {
+                // ignored
+            }
+        }
+        
+        /*public async Task PublishEventsThroughEventBusAsync(Guid transactionId)
         {
             var pendingLogEvents = await _eventLogService.RetrieveEventLogsPendingToPublishAsync(transactionId);
 
@@ -47,6 +59,6 @@ namespace Ordering.API.Application.IntegrationEvents
         public async Task AddAndSaveEventAsync(IntegrationEvent evt)
         {
             await _eventLogService.SaveEventAsync(evt, _orderingContext.GetCurrentTransaction());
-        }
+        }*/
     }
 }
