@@ -60,7 +60,7 @@ namespace Catalog.API.Controllers
                 .Take(pageSize)
                 .ToListAsync();
 
-            itemsOnPage = ChangeUriPlaceholder(itemsOnPage);
+            //itemsOnPage = ChangeUriPlaceholder(itemsOnPage);
 
             var model = new PaginatedItemsViewModel<CatalogItem>(pageIndex, pageSize, totalItems, itemsOnPage);
 
@@ -81,7 +81,7 @@ namespace Catalog.API.Controllers
 
             var items = await _catalogContext.CatalogItems.Where(ci => idsToSelect.Contains(ci.Id)).ToListAsync();
 
-            items = ChangeUriPlaceholder(items);
+            //items = ChangeUriPlaceholder(items);
 
             return items;
         }
@@ -102,7 +102,7 @@ namespace Catalog.API.Controllers
 
             var baseUri = _settings.PicBaseUrl;
 
-            item.FillProductUrl(baseUri);
+            //item.FillProductUrl(baseUri);
 
             if (item != null)
             {
@@ -128,7 +128,7 @@ namespace Catalog.API.Controllers
                 .Take(pageSize)
                 .ToListAsync();
 
-            itemsOnPage = ChangeUriPlaceholder(itemsOnPage);
+            //itemsOnPage = ChangeUriPlaceholder(itemsOnPage);
 
             return new PaginatedItemsViewModel<CatalogItem>(pageIndex, pageSize, totalItems, itemsOnPage);
         }
@@ -156,7 +156,7 @@ namespace Catalog.API.Controllers
                 .Take(pageSize)
                 .ToListAsync();
 
-            itemsOnPage = ChangeUriPlaceholder(itemsOnPage);
+            //itemsOnPage = ChangeUriPlaceholder(itemsOnPage);
 
             return new PaginatedItemsViewModel<CatalogItem>(pageIndex, pageSize, totalItems, itemsOnPage);
         }
@@ -182,7 +182,7 @@ namespace Catalog.API.Controllers
                 .Take(pageSize)
                 .ToListAsync();
 
-            itemsOnPage = ChangeUriPlaceholder(itemsOnPage);
+            //itemsOnPage = ChangeUriPlaceholder(itemsOnPage);
 
             return new PaginatedItemsViewModel<CatalogItem>(pageIndex, pageSize, totalItems, itemsOnPage);
         }
@@ -206,7 +206,7 @@ namespace Catalog.API.Controllers
         }
 
         //PUT api/v1/[controller]/items
-        /*[Route("items")]
+        [Route("items")]
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.Created)]
@@ -220,7 +220,7 @@ namespace Catalog.API.Controllers
             }
 
             var oldPrice = catalogItem.Price;
-            var raiseProductPriceChangedEvent = /*oldPrice != productToUpdate.Price;#1# true;
+            var raiseProductPriceChangedEvent = oldPrice != productToUpdate.Price;;
 
             // Update current product
             catalogItem = productToUpdate;
@@ -243,7 +243,7 @@ namespace Catalog.API.Controllers
             }
 
             return CreatedAtAction(nameof(ItemByIdAsync), new { id = productToUpdate.Id }, null);
-        }*/
+        }
         
         [Route("items")]
         [HttpPut]

@@ -23,7 +23,7 @@ namespace Ordering.API.Application.IntegrationEvents
             //_eventLogService = eventLogService ?? throw new ArgumentNullException(nameof(eventLogService));
         }
         
-        public async Task PublishEventsThroughEventBusAsync(IntegrationEvent @event)
+        public Task PublishEventsThroughEventBusAsync(IntegrationEvent @event)
         {
             try
             {
@@ -33,6 +33,8 @@ namespace Ordering.API.Application.IntegrationEvents
             {
                 // ignored
             }
+
+            return null;
         }
         
         /*public async Task PublishEventsThroughEventBusAsync(Guid transactionId)

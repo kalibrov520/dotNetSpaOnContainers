@@ -123,7 +123,7 @@ namespace Basket.API
              services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
 
              services.AddTransient<ProductPriceChangedIntegrationEventHandler>();
-             //services.AddTransient<OrderStartedIntegrationEventHandler>();
+             services.AddTransient<OrderStartedIntegrationEventHandler>();
         }
 
         private void ConfigureEventBus(IApplicationBuilder app)
@@ -131,7 +131,7 @@ namespace Basket.API
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
 
             eventBus.Subscribe<ProductPriceChangedIntegrationEvent, ProductPriceChangedIntegrationEventHandler>();
-            //eventBus.Subscribe<OrderStartedIntegrationEvent, OrderStartedIntegrationEventHandler>();
+            eventBus.Subscribe<OrderStartedIntegrationEvent, OrderStartedIntegrationEventHandler>();
         }
     }
 }

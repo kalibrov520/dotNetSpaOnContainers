@@ -38,9 +38,7 @@ namespace Ordering.API.Application.IntegrationEvents.EventHandling
                     @event.CardNumber, @event.CardHolderName, @event.CardExpiration,
                     @event.CardSecurityNumber, @event.CardTypeId);
 
-                var requestCreateOrder = new IdentifiedCommand<CreateOrderCommand, bool>(createOrderCommand, @event.RequestId);
-
-                result = await _mediator.Send(requestCreateOrder);
+                result = await _mediator.Send(createOrderCommand);
             }
             else
             {

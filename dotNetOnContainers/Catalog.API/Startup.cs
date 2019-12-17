@@ -86,7 +86,7 @@ namespace Catalog.API
             IConfiguration configuration)
         {
             services.AddEntityFrameworkSqlServer()
-                .AddDbContext<CatalogContext>(options => options.UseSqlServer("Data Source=IKALIBROV\\SQLEXPRESS;Initial Catalog=test;Integrated Security=True"));
+                .AddDbContext<CatalogContext>(options => options.UseSqlServer("Data Source=IKALIBROV;Initial Catalog=CatalogDB;Integrated Security=True"));
 
             return services;
         }
